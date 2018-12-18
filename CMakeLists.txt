@@ -74,8 +74,8 @@ find_package(catkin REQUIRED COMPONENTS
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-#  INCLUDE_DIRS include
-#  LIBRARIES altitude_sensor
+ INCLUDE_DIRS include
+ LIBRARIES sf11_altitude_sensor
   CATKIN_DEPENDS 
 	roscpp
   	cereal_port
@@ -91,13 +91,12 @@ catkin_package(
 ## Specify additional locations of header files
 ## Your package locations should be listed before other locations
 # include_directories(include)
-include_directories(
+include_directories( include
   ${catkin_INCLUDE_DIRS} ${modular_lib_pkg_INCLUDE_DIRS} ${cereal_port_INCLUDE_DIRS}
 )
 
-## Declare a cpp library
-# add_library(altitude_sensor
-#   src/${PROJECT_NAME}/altitude_sensor.cpp
+# ## Declare a cpp library
+# add_library(${PROJECT_NAME} src/altitude_sensor_node.cpp
 # )
 
 ## Declare a cpp executable

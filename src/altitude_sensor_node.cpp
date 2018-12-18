@@ -1,6 +1,6 @@
 #include <ros/ros.h>
 #include <std_msgs/String.h>
-#include <altitude_sensor/sensor_data.h>
+#include <sf11_altitude_sensor/sensor_data.h>
 #include <cereal_port/CerealPort.h>
 #include <string>
 #include <vector>
