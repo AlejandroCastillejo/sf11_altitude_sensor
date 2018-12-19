@@ -1,5 +1,6 @@
 #include <ros/ros.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Float64.h>
 #include <sf11_altitude_sensor/sensor_data.h>
 #include <cereal_port/CerealPort.h>
 #include <string>
@@ -29,14 +30,15 @@ int main(int argc, char** argv) {
 	ros::NodeHandle nh;
 	
     //creating a publisher
-	ros::Publisher value_pub=nh.advertise<altitude_sensor::sensor_data>("altitude", 5);
+	// ros::Publisher value_pub=nh.advertise<altitude_sensor::sensor_data>("altitude", 5);
+	ros::Publisher value_pub=nh.advertise<std_msgs::Float64>("laser_altitude", 5);
 	
 	ros::Rate loop_rate(sensor_frequency); 
 	
 	cereal::CerealPort device;
 	char reply[REPLY_SIZE];
 	
-	altitude_sensor::sensor_data message;
+	// altitude_sensor::sensor_data message;
 	
 
     //setting default device path for the sensor
@@ -76,16 +78,16 @@ int main(int argc, char** argv) {
 		ss1 >> altitude;
 
 		
-		message.altitude=altitude;
+		// message.altitude=altitude;
 
 		/*getting the voltage */
 		for(unsigned int j=voltage_message_begin; j<=voltage_message_end; j++) {
 			ss2<<reply[j];
 		}		
 		ss2 >>voltage;
-		message.voltage=voltage;
-		message.header.frame_id="altitude sensor";
-		message.header.stamp=ros::Time::now();				
+		// message.voltage=voltage;
+		// message.header.frame_id="altitude sensor";
+		// message.header.stamp=ros::Time::now();				
 	
 		
 		if(isdigit(reply[altitude_message_end])) {
@@ -95,7 +97,8 @@ int main(int argc, char** argv) {
 		
 		}
 
-		value_pub.publish(message);
+		// value_pub.publish(message);
+		value_pub.publish(altitude);
 
 		
 		/* for synchronisation */
@@ -112,14 +115,14 @@ int main(int argc, char** argv) {
 			if(voltage_message_begin>=20) voltage_message_begin=voltage_message_begin-20;
 			if(voltage_message_end>=20) voltage_message_end=voltage_message_end-20;
 			if(altitude_message_begin>=20) altitude_message_begin=altitude_message_begin-20;
-			if(altitude_message_end>=20) altitude_message_end=altitude_message_end-20;
-				
-			
+			if(altitude_message_end>=20) altitude_message_end=altitude_message_end-20;			
 		}
-		
+
 		loop_rate.sleep(); 
-		
 	}
+	
+	// value_pub.shutdown();
+
 	
 	ros::spin();
 
