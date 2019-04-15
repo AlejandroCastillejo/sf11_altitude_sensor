@@ -11,7 +11,7 @@
 
 	const unsigned int sensor_frequency = 50; /*sensor frequency in hz*/
 
-	double altitude;
+	std_msgs::Float64 altitude;
 	double voltage;
 	std::string serial_port;
 
@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
 		for(unsigned int i=altitude_message_begin; i<=altitude_message_end; i++) {
 			ss1<<reply[i];
 		}		
-		ss1 >> altitude;
+		ss1 >> altitude.data;
 
 		
 		// message.altitude=altitude;
